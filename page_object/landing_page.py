@@ -11,8 +11,6 @@ class LandingPage(BaseObject):
     def __init__(self, driver):
         self.driver = driver
         self.incidents_on_page = self.driver.find_elements(By.CSS_SELECTOR, "table#incident_table tbody tr")
-        self.input_form = find_element_explicitly(driver, (By.CSS_SELECTOR, self.input_form_css))
-        # self.input_form = self.driver.find_element(By.CSS_SELECTOR, "div#navbar-brand-centered li.dropdown a")
 
     def parse_table(self):
         rows = [row for row in self.incidents_on_page]
@@ -28,11 +26,8 @@ class LandingPage(BaseObject):
             incident_grid.add_incident(incident)
         return incident_grid
 
-    def click_landing_page(self):
-        self.input_form.click()
-        sleep(5)
+    def open_incident(self, incident_number):
+        grid = self.parse_table()
+        incident = list(filter(lambda x: x.number == incident_number, grid))
+        incident[0].open_incident()
 
-    def get_values(self):
-        self.input_form.click()
-        options = get_dropdown_values(self.driver, self.input_form_css)
-        return options

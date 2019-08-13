@@ -18,6 +18,6 @@ class TestExampleOne(BaseTest):
 
     def test_options(self):
         landing_page = LandingPage(self.driver)
-        options = landing_page.get_values()
-        LOGGER.info("Options = %s" % options)
+        options = landing_page.parse_table()
+        LOGGER.info("Options = %s" % len(options))
 
